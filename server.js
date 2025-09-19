@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import mime from 'mime';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,18 +19,30 @@ if (fs.existsSync('./dist')) {
   console.log('Files in ./dist:', fs.readdirSync('./dist'));
 }
 
-// Configure MIME types before serving static files
-app.use('/dist', (req, res, next) => {
-  if (req.path.endsWith('.js')) {
-    res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
-  } else if (req.path.endsWith('.css')) {
-    res.setHeader('Content-Type', 'text/css; charset=UTF-8');
-  }
-  next();
-}, express.static('./dist'));
+// Force correct MIME types
+mime.define({
+  'application/javascript': ['js'],
+  'text/css': ['css']
+});
 
-// Serve other static files
-app.use(express.static('./'));
+// Serve static files with proper MIME types
+app.use('/dist', express.static('./dist', {
+  setHeaders: (res, filePath) => {
+    const mimeType = mime.getType(filePath);
+    if (mimeType) {
+      res.setHeader('Content-Type', mimeType);
+    }
+  }
+}));
+
+app.use(express.static('./', {
+  setHeaders: (res, filePath) => {
+    const mimeType = mime.getType(filePath);
+    if (mimeType) {
+      res.setHeader('Content-Type', mimeType);
+    }
+  }
+}));
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
