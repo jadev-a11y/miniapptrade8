@@ -1,20 +1,9 @@
 services:
   - type: web
     name: miniapptrade8
-    env: static
+    env: node
     buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    headers:
-      - path: /*
-        name: X-Frame-Options
-        value: ALLOWALL
-      - path: /*
-        name: Content-Security-Policy
-        value: "frame-ancestors *"
+    startCommand: npx serve dist -s -p $PORT
     envVars:
       - key: VITE_OPENAI_API_KEY
         sync: false
