@@ -2,10 +2,10 @@
 
 :root {
   /* iOS 26 Glass Variables - Black Neon */
-  --glass-bg: rgba(0, 0, 0, 0.85);
-  --glass-border: rgba(0, 255, 136, 0.6);
-  --glass-highlight: rgba(0, 255, 136, 0.3);
-  --glass-shadow: 0 0 30px rgba(0, 255, 136, 0.4), 0 8px 32px rgba(0, 0, 0, 0.7);
+  --glass-bg: rgba(0, 0, 0, 0.95);
+  --glass-border: rgba(0, 255, 136, 0.8);
+  --glass-highlight: rgba(0, 255, 136, 0.4);
+  --glass-shadow: 0 0 30px rgba(0, 255, 136, 0.6), 0 8px 32px rgba(0, 0, 0, 0.9);
   --glass-blur: 40px;
   --glass-saturation: 180%;
 
