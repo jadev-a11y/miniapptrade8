@@ -13,8 +13,25 @@ interface AnalysisResult {
   sources?: Array<{title: string, url: string}>;
 }
 
+// Get API key from environment variables
+const getApiKey = () => {
+  // For production (Render) - environment variable will be injected during build
+  if (typeof process !== 'undefined' && process.env.OPENAI_API_KEY) {
+    return process.env.OPENAI_API_KEY;
+  }
+  // For development - from import.meta.env
+  if (import.meta.env.VITE_OPENAI_API_KEY) {
+    return import.meta.env.VITE_OPENAI_API_KEY;
+  }
+  // Fallback for browser runtime with window object
+  if (typeof window !== 'undefined' && (window as any).OPENAI_API_KEY) {
+    return (window as any).OPENAI_API_KEY;
+  }
+  throw new Error('OpenAI API key not found in environment variables');
+};
+
 const openai = new OpenAI({
-  apiKey: 'sk-demo-key-for-testing-remove-in-production',
+  apiKey: getApiKey(),
   dangerouslyAllowBrowser: true,
   defaultHeaders: {
     'Content-Type': 'application/json',
