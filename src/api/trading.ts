@@ -13,30 +13,45 @@ interface AnalysisResult {
   sources?: Array<{title: string, url: string}>;
 }
 
-// Get API key from environment variables
-const getApiKey = () => {
-  // For production (Render) - environment variable will be injected during build
-  if (typeof process !== 'undefined' && process.env.OPENAI_API_KEY) {
-    return process.env.OPENAI_API_KEY;
-  }
-  // For development - from import.meta.env
+// Get API key from server or environment
+const getApiKey = async (): Promise<string> => {
+  // Try development environment first
   if (import.meta.env.VITE_OPENAI_API_KEY) {
     return import.meta.env.VITE_OPENAI_API_KEY;
   }
+
+  // Try to get from server (production)
+  try {
+    const response = await fetch('/api/config');
+    if (response.ok) {
+      const config = await response.json();
+      if (config.OPENAI_API_KEY) {
+        return config.OPENAI_API_KEY;
+      }
+    }
+  } catch (error) {
+    console.warn('Failed to fetch API key from server:', error);
+  }
+
   // Fallback for browser runtime with window object
   if (typeof window !== 'undefined' && (window as any).OPENAI_API_KEY) {
     return (window as any).OPENAI_API_KEY;
   }
-  throw new Error('OpenAI API key not found in environment variables');
+
+  throw new Error('OpenAI API key not found - check environment variables');
 };
 
-const openai = new OpenAI({
-  apiKey: getApiKey(),
-  dangerouslyAllowBrowser: true,
-  defaultHeaders: {
-    'Content-Type': 'application/json',
-  }
-});
+// Initialize OpenAI client when needed
+const createOpenAIClient = async () => {
+  const apiKey = await getApiKey();
+  return new OpenAI({
+    apiKey,
+    dangerouslyAllowBrowser: true,
+    defaultHeaders: {
+      'Content-Type': 'application/json',
+    }
+  });
+};
 
 // Step 0: Get Real Data from Python Microservice
 async function getRealForexData(symbol: string): Promise<any> {
@@ -145,6 +160,7 @@ Sentiment: [market mood]
 
   try {
     console.log('--- Calling GPT-4o-search-preview for data collection ---');
+    const openai = await createOpenAIClient();
     const dataResponse = await openai.chat.completions.create({
       model: "gpt-4o-search-preview",
       web_search_options: {
@@ -200,6 +216,7 @@ async function analyzeWithGPT4oMini(symbol: string, marketData: string): Promise
   // REAL GPT-4o-mini analysis instead of local logic
   try {
     console.log('--- Calling GPT-4o-mini for trading analysis ---');
+    const openai = await createOpenAIClient();
     const analysisResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
@@ -282,6 +299,7 @@ export async function analyzeSymbol(symbol: string): Promise<AnalysisResult> {
   try {
     console.log('🔍 Analyzing with GPT-4o-search-preview...');
 
+    const openai = await createOpenAIClient();
     const response = await openai.chat.completions.create({
       model: "gpt-4o-search-preview",
       web_search_options: {

@@ -39,6 +39,13 @@ app.use(express.static('./', {
   }
 }));
 
+// API endpoint для получения ключа
+app.get('/api/config', (req, res) => {
+  res.json({
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY
+  });
+});
+
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
   const indexPath = path.join(process.cwd(), 'index.html');
