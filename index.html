@@ -3,11 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light">
     <title>Trading Bot</title>
     <link rel="stylesheet" href="/dist/bundle.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+      }
+      #root {
+        min-height: 100vh;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/dist/bundle.js"></script>
+    <div id="root">
+      <div style="color: white; padding: 20px; text-align: center;">
+        Loading...
+      </div>
+    </div>
+    <script>
+      // Debug info
+      console.log('Loading script...');
+      window.addEventListener('error', (e) => {
+        console.error('Script error:', e);
+      });
+    </script>
+    <script src="/dist/bundle.js"></script>
   </body>
 </html>

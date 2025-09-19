@@ -14,7 +14,7 @@ interface AnalysisResult {
 }
 
 const openai = new OpenAI({
-  apiKey: (window as any)?.ENV?.VITE_OPENAI_API_KEY || (import.meta as any)?.env?.VITE_OPENAI_API_KEY,
+  apiKey: 'sk-demo-key-for-testing-remove-in-production',
   dangerouslyAllowBrowser: true,
   defaultHeaders: {
     'Content-Type': 'application/json',
