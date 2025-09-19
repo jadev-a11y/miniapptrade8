@@ -15,9 +15,13 @@ interface AnalysisResult {
 
 // Get API key from server or environment
 const getApiKey = async (): Promise<string> => {
-  // Try development environment first
-  if (import.meta.env.VITE_OPENAI_API_KEY) {
-    return import.meta.env.VITE_OPENAI_API_KEY;
+  // Try development environment first (with try-catch for IIFE format)
+  try {
+    if (import.meta.env.VITE_OPENAI_API_KEY) {
+      return import.meta.env.VITE_OPENAI_API_KEY;
+    }
+  } catch (error) {
+    // import.meta not available in IIFE format, continue to server fetch
   }
 
   // Try to get from server (production)
