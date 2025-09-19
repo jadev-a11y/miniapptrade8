@@ -18,35 +18,18 @@ if (fs.existsSync('./dist')) {
   console.log('Files in ./dist:', fs.readdirSync('./dist'));
 }
 
-// Set proper MIME types
-express.static.mime.define({
-  'application/javascript': ['js'],
-  'text/css': ['css']
-});
-
-// Serve static files from dist directory
-app.use('/dist', express.static('./dist', {
-  setHeaders: (res, path) => {
-    if (path.endsWith('.js')) {
-      res.setHeader('Content-Type', 'application/javascript');
-    }
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    }
+// Configure MIME types before serving static files
+app.use('/dist', (req, res, next) => {
+  if (req.path.endsWith('.js')) {
+    res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
+  } else if (req.path.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css; charset=UTF-8');
   }
-}));
+  next();
+}, express.static('./dist'));
 
-// Serve other static files from root
-app.use(express.static('./', {
-  setHeaders: (res, path) => {
-    if (path.endsWith('.js')) {
-      res.setHeader('Content-Type', 'application/javascript');
-    }
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    }
-  }
-}));
+// Serve other static files
+app.use(express.static('./'));
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
