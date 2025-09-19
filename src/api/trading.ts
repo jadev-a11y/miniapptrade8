@@ -188,7 +188,7 @@ Sentiment: [market mood]
           content: dataCollectionPrompt
         }
       ],
-      max_tokens: 1000
+      max_tokens: 3000
     });
 
     const marketData = dataResponse.choices[0].message.content || '';
@@ -249,7 +249,7 @@ TAHLIL: [RSI va MACD asosida batafsil tahlil. Nega bu signal? Risk nima?]
 FAQAT ANIQ JAVOB BERING!`
         }
       ],
-      max_tokens: 500,
+      max_tokens: 2000,
       temperature: 0.7
     });
 
@@ -326,32 +326,69 @@ export async function analyzeSymbol(symbol: string): Promise<AnalysisResult> {
           role: "user",
           content: `${symbol} uchun ANIQ texnik tahlil va trading signal bering:
 
-🎯 WEB SEARCH VAZIFASI:
+🎯 KENG WEB SEARCH VAZIFASI:
 "${symbol} current price today live real time spot"
 "${symbol} RSI indicator current value today"
 "${symbol} MACD signal current bullish bearish"
 "${symbol} technical analysis live trading signals"
+"${symbol} market news today fundamental analysis"
+"${symbol} economic factors affecting price"
+"${symbol} volume analysis trading signals"
+"${symbol} support resistance levels technical chart"
+"${symbol} momentum indicators stochastic"
+"${symbol} fibonacci retracement levels"
+"${symbol} candlestick patterns today"
+"${symbol} trend analysis moving averages"
 
-📊 MAJBURIY TOPISH KERAK:
-1. Hozirgi aniq narx (USD)
-2. RSI qiymati (0-100)
-3. MACD signali (bullish/bearish/neutral)
-4. Moving Average holati
-5. Support va Resistance darajalari
+📊 KENG MA'LUMOT TOPISH KERAK:
+1. Hozirgi aniq narx (USD) va 24-soatlik o'zgarish
+2. RSI qiymati (0-100) va trend
+3. MACD signali va histogram
+4. Moving Average 20, 50, 200 holati
+5. Support va Resistance darajalari (eng kam 3ta)
+6. Volume tahlili va momentum
+7. Fundamental yangiliklar va tahlil
+8. Stochastic va boshqa ko'rsatkichlar
+9. Candlestick pattern tahlili
+10. Fibonacci retracement darajalari
+11. Market sentiment va whale activity
+12. Economic calendar ta'siri
 
-✅ JAVOB FORMATI:
+✅ BATAFSIL JAVOB FORMATI:
 Signal: [BUY/SELL/HOLD]
-Ishonch: [yuqori/o'rta/past]
+Ishonch: [yuqori/o'rta/past] - [%]
 Narx: [aniq USD qiymat]
 Maqsad: [aniq USD qiymat]
 Stop: [aniq USD qiymat]
 
-TAHLIL: [RSI, MACD, MA asosida batafsil sabab. Nima uchun bu signal? Risk va foyda potentsiali?]
+BATAFSIL TEXNIK TAHLIL:
+- RSI: [qiymat] ([oversold/overbought/neutral])
+- MACD: [signal] ([divergence bor/yo'q])
+- Moving Averages: [20MA, 50MA, 200MA holati]
+- Support: [3ta daraja]
+- Resistance: [3ta daraja]
+- Volume: [yuqori/past/o'rta] + trend
+- Stochastic: [qiymat va signal]
+- Fibonacci: [muhim retracement darajalari]
+- Candlestick: [oxirgi pattern]
 
-FAQAT ANIQ JAVOB BERING! Shablonlarni emas, real web search natijalarini ishlating!`
+FUNDAMENTAL TAHLIL:
+- Oxirgi yangiliklar va ularning ta'siri
+- Economic calendar eventlari
+- Market sentiment (Fear/Greed index)
+- Institutlar va whale faoliyati
+- Makroiqtisodiy omillar
+
+RISK MENEJMENTI:
+- Entry strategy va vaqt
+- Position sizing tavsiya
+- Risk/Reward ratio
+- Alternativ scenario
+
+MAKSIMAL BATAFSIL VA PROFESSIONAL JAVOB BERING! Barcha web search natijalarini ishlating!`
         }
       ],
-      max_tokens: 800
+      max_tokens: 4000
     });
 
     const analysisText = response.choices[0].message.content || '';
