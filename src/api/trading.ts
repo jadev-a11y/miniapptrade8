@@ -17,8 +17,8 @@ interface AnalysisResult {
 const getApiKey = async (): Promise<string> => {
   // Try development environment first (with try-catch for IIFE format)
   try {
-    if (import.meta.env.VITE_OPENAI_API_KEY) {
-      return import.meta.env.VITE_OPENAI_API_KEY;
+    if ((import.meta as any)?.env?.VITE_OPENAI_API_KEY) {
+      return (import.meta as any).env.VITE_OPENAI_API_KEY;
     }
   } catch (error) {
     // import.meta not available in IIFE format, continue to server fetch
@@ -77,6 +77,7 @@ async function getRealForexData(symbol: string): Promise<any> {
 }
 
 // Step 1: Data Collection with GPT-4o Web Search (Enhanced with Python data)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function collectMarketData(symbol: string): Promise<string> {
   // First, try to get real data from Python microservice
   const pythonData = await getRealForexData(symbol);
@@ -202,6 +203,7 @@ Sentiment: [market mood]
 }
 
 // Step 2: Analysis with GPT-4o-mini
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function analyzeWithGPT4oMini(symbol: string, marketData: string): Promise<string> {
   // Extract real values from market data - try multiple patterns
   const priceMatch = marketData.match(/NARX:\s*\$?([\d.,]+)/i) ||
@@ -514,6 +516,7 @@ function parseAnalysis(text: string, symbol: string): AnalysisResult {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function cleanAnalysisText(text: string): string {
   let cleanedText = text;
 
