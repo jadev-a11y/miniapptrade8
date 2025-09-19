@@ -18,8 +18,35 @@ if (fs.existsSync('./dist')) {
   console.log('Files in ./dist:', fs.readdirSync('./dist'));
 }
 
-// Serve static files from current directory (where files actually are)
-app.use(express.static('./'));
+// Set proper MIME types
+express.static.mime.define({
+  'application/javascript': ['js'],
+  'text/css': ['css']
+});
+
+// Serve static files from dist directory
+app.use('/dist', express.static('./dist', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  }
+}));
+
+// Serve other static files from root
+app.use(express.static('./', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  }
+}));
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
