@@ -18,12 +18,12 @@ if (fs.existsSync('./dist')) {
   console.log('Files in ./dist:', fs.readdirSync('./dist'));
 }
 
-// Serve static files from the dist directory
-app.use(express.static('./dist'));
+// Serve static files from current directory (where files actually are)
+app.use(express.static('./'));
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
-  const indexPath = path.join(process.cwd(), 'dist', 'index.html');
+  const indexPath = path.join(process.cwd(), 'index.html');
   console.log('Trying to serve:', indexPath);
   console.log('File exists?', fs.existsSync(indexPath));
   res.sendFile(indexPath);
