@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: miniapptrade8
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: ALLOWALL
+      - path: /*
+        name: Content-Security-Policy
+        value: "frame-ancestors *"
+    envVars:
+      - key: VITE_OPENAI_API_KEY
+        fromDatabase:
+          name: trading-bot-secrets
+          property: openai_api_key
