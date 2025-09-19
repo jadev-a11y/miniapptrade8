@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import mime from 'mime';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,27 +18,23 @@ if (fs.existsSync('./dist')) {
   console.log('Files in ./dist:', fs.readdirSync('./dist'));
 }
 
-// Force correct MIME types
-mime.define({
-  'application/javascript': ['js'],
-  'text/css': ['css']
-});
-
-// Serve static files with proper MIME types
+// Serve static files with forced MIME types
 app.use('/dist', express.static('./dist', {
   setHeaders: (res, filePath) => {
-    const mimeType = mime.getType(filePath);
-    if (mimeType) {
-      res.setHeader('Content-Type', mimeType);
+    if (filePath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    } else if (filePath.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css; charset=utf-8');
     }
   }
 }));
 
 app.use(express.static('./', {
   setHeaders: (res, filePath) => {
-    const mimeType = mime.getType(filePath);
-    if (mimeType) {
-      res.setHeader('Content-Type', mimeType);
+    if (filePath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    } else if (filePath.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css; charset=utf-8');
     }
   }
 }));
