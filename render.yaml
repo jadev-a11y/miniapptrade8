@@ -3,7 +3,7 @@ services:
     name: miniapptrade8
     env: node
     buildCommand: npm install && npm run build
-    startCommand: npx serve dist -s -p $PORT
+    startCommand: node server.js
     envVars:
       - key: VITE_OPENAI_API_KEY
         sync: false
