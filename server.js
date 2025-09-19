@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -8,16 +9,24 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Static files path - dist is in current directory on Render
-const distPath = './dist';
-console.log('Looking for dist at:', distPath);
+// Debug: Check where we are and what files exist
+console.log('Current directory:', process.cwd());
+console.log('__dirname:', __dirname);
+console.log('Files in current dir:', fs.readdirSync('.'));
+console.log('Does ./dist exist?', fs.existsSync('./dist'));
+if (fs.existsSync('./dist')) {
+  console.log('Files in ./dist:', fs.readdirSync('./dist'));
+}
 
 // Serve static files from the dist directory
-app.use(express.static(distPath));
+app.use(express.static('./dist'));
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve('./dist/index.html'));
+  const indexPath = path.join(process.cwd(), 'dist', 'index.html');
+  console.log('Trying to serve:', indexPath);
+  console.log('File exists?', fs.existsSync(indexPath));
+  res.sendFile(indexPath);
 });
 
 app.listen(port, () => {
