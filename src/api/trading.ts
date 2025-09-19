@@ -25,7 +25,7 @@ const openai = new OpenAI({
 async function getRealForexData(symbol: string): Promise<any> {
   try {
     console.log('🐍 Getting real data from Python microservice...');
-    const response = await fetch(`http://localhost:5001/api/forex-data/${symbol}`);
+    const response = await fetch(`https://tgbottarde8.onrender.com/api/forex-data/${symbol}`);
     const data = await response.json();
 
     if (data.success) {
