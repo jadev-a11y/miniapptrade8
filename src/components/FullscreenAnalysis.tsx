@@ -101,7 +101,13 @@ const FullscreenAnalysis: React.FC<FullscreenAnalysisProps> = ({
           <div className="header-content">
             <div className="title-section">
               <div className="title-with-logo">
-                <span className="chart-logo">📊</span>
+                <svg width="32" height="32" viewBox="0 0 32 32" className="chart-logo-svg">
+                  <path d="M4 22L12 14L16 18L28 6" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="28" cy="6" r="2.5" fill="currentColor"/>
+                  <circle cx="16" cy="18" r="2.5" fill="currentColor"/>
+                  <circle cx="12" cy="14" r="2.5" fill="currentColor"/>
+                  <circle cx="4" cy="22" r="2.5" fill="currentColor"/>
+                </svg>
                 <h1 className="analysis-title">
                   {symbol} Tahlili
                 </h1>

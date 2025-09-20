@@ -100,12 +100,12 @@ ${newsFormatted}
 
 Qo'shimcha web search orqali ${symbol} uchun texnik ma'lumotlarni to'ldiring:
 
-🎯 WEB SEARCH VAZIFASI:
+WEB SEARCH VAZIFASI:
 "${symbol} RSI indicator today current value"
 "${symbol} MACD signal bullish or bearish"
 "${symbol} technical indicators live"
 
-📊 MAJBURIY TOPISH KERAK:
+MAJBURIY TOPISH KERAK:
 1. RSI qiymati - raqam 0-100 orasida
 2. MACD signali - bullish yoki bearish
 
@@ -133,15 +133,15 @@ MACD: neutral`;
 🐍 PYTHON TOPGAN YANGILIKLAR:
 ${newsFormatted}
 
-🎯 SIZNING VAZIFANGIZ - WEB SEARCH orqali ${symbol} uchun ANIQ NARX va TEXNIK MA'LUMOTLAR topish:
+SIZNING VAZIFANGIZ - WEB SEARCH orqali ${symbol} uchun ANIQ NARX va TEXNIK MA'LUMOTLAR topish:
 
-🎯 QIDIRISH VAZIFASI:
+QIDIRISH VAZIFASI:
 - "${symbol} current price today live real time spot"
 - "${symbol} price USD latest current value"
 - "${symbol} technical analysis RSI MACD today"
 - "${symbol} live quote real time trading"
 
-📊 TOPISH KERAK:
+TOPISH KERAK:
 1. Hozirgi narx (bid/ask)
 2. RSI qiymati
 3. MACD holati
@@ -322,72 +322,29 @@ export async function analyzeSymbol(symbol: string): Promise<AnalysisResult> {
       messages: [
         {
           role: "system",
-          content: "Siz professional forex trader va texnik tahlil mutaxassisisiz. FAQAT web search orqali ANIQ ma'lumotlar toping va trading signal bering."
+          content: "You are a professional forex trader and technical analyst. Be yourself and provide deep, comprehensive analysis using current market data."
         },
         {
           role: "user",
-          content: `${symbol} uchun ANIQ texnik tahlil va trading signal bering:
+          content: `Please analyze ${symbol} and provide a detailed trading analysis:
 
-🎯 KENG WEB SEARCH VAZIFASI:
-"${symbol} current price today live real time spot"
-"${symbol} RSI indicator current value today"
-"${symbol} MACD signal current bullish bearish"
-"${symbol} technical analysis live trading signals"
-"${symbol} market news today fundamental analysis"
-"${symbol} economic factors affecting price"
-"${symbol} volume analysis trading signals"
-"${symbol} support resistance levels technical chart"
-"${symbol} momentum indicators stochastic"
-"${symbol} fibonacci retracement levels"
-"${symbol} candlestick patterns today"
-"${symbol} trend analysis moving averages"
+Search for current market data:
+- Current ${symbol} price and daily change
+- Technical indicators (RSI, MACD, Moving Averages)
+- Support and resistance levels
+- Market news and sentiment
+- Volume analysis
+- Economic factors affecting this pair
 
-📊 KENG MA'LUMOT TOPISH KERAK:
-1. Hozirgi aniq narx (USD) va 24-soatlik o'zgarish
-2. RSI qiymati (0-100) va trend
-3. MACD signali va histogram
-4. Moving Average 20, 50, 200 holati
-5. Support va Resistance darajalari (eng kam 3ta)
-6. Volume tahlili va momentum
-7. Fundamental yangiliklar va tahlil
-8. Stochastic va boshqa ko'rsatkichlar
-9. Candlestick pattern tahlili
-10. Fibonacci retracement darajalari
-11. Market sentiment va whale activity
-12. Economic calendar ta'siri
+Provide your professional analysis including:
+1. Current market situation
+2. Technical analysis with specific values
+3. Trading recommendation (BUY/SELL/HOLD) with confidence level
+4. Target and stop loss levels
+5. Risk assessment
+6. Market context and relevant news
 
-✅ BATAFSIL JAVOB FORMATI:
-Signal: [BUY/SELL/HOLD]
-Ishonch: [yuqori/o'rta/past] - [%]
-Narx: [aniq USD qiymat]
-Maqsad: [aniq USD qiymat]
-Stop: [aniq USD qiymat]
-
-BATAFSIL TEXNIK TAHLIL:
-- RSI: [qiymat] ([oversold/overbought/neutral])
-- MACD: [signal] ([divergence bor/yo'q])
-- Moving Averages: [20MA, 50MA, 200MA holati]
-- Support: [3ta daraja]
-- Resistance: [3ta daraja]
-- Volume: [yuqori/past/o'rta] + trend
-- Stochastic: [qiymat va signal]
-- Fibonacci: [muhim retracement darajalari]
-- Candlestick: [oxirgi pattern]
-
-FUNDAMENTAL TAHLIL:
-- Oxirgi yangiliklar va ularning ta'siri
-- Economic calendar eventlari
-- Market sentiment (Fear/Greed index)
-- Institutlar va whale faoliyati
-- Makroiqtisodiy omillar
-
-RISK MENEJMENTI:
-- Entry strategy va vaqt
-- Position sizing tavsiya
-- Risk/Reward ratio
-- Alternativ scenario
-
-MAKSIMAL BATAFSIL VA PROFESSIONAL JAVOB BERING! Barcha web search natijalarini ishlating!`
+Give me your honest professional opinion based on the data you find.`
         }
       ],
       max_tokens: 4000
@@ -396,8 +353,11 @@ MAKSIMAL BATAFSIL VA PROFESSIONAL JAVOB BERING! Barcha web search natijalarini i
     const analysisText = response.choices[0].message.content || '';
     console.log(`GPT-4o-search-preview Output:\n${analysisText}\n`);
 
+    // Clean the analysis text from symbols and formatting
+    const cleanedText = cleanAnalysisText(analysisText);
+
     // Parse the analysis
-    const result = parseAnalysis(analysisText, symbol);
+    const result = parseAnalysis(cleanedText, symbol);
     console.log('✅ Analysis completed successfully');
     return result;
 
@@ -493,7 +453,9 @@ function parseAnalysis(text: string, symbol: string): AnalysisResult {
     }
 
     if (!reason || reason.length < 50) {
-      reason = `${symbol} juftligi uchun batafsil texnik va fundamental tahlil o'tkazildi. Oxirgi bozor ma'lumotlari, makroiqtisodiy omillar va texnik ko'rsatkichlar asosida ${signal} signali tavsiya etilmoqda.`;
+      reason = cleanedText || `${symbol} professional trading analysis completed. Recommendation: ${signal} signal based on current market data and technical indicators.`;
+    } else {
+      reason = cleanAnalysisText(reason);
     }
 
     return {

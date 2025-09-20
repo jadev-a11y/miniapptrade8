@@ -184,6 +184,35 @@ const TradingAnalyzer: React.FC = () => {
                   <div className="chart-bar" style={{height: '80%'}}></div>
                 </div>
               </div>
+
+              {/* Анимированное лого над прогресс баром */}
+              <div className="progress-logo-container">
+                <div className="rotating-progress-logo">
+                  <svg width="40" height="40" viewBox="0 0 120 120" className="progress-trading-logo">
+                    <circle
+                      cx="60"
+                      cy="60"
+                      r="45"
+                      fill="none"
+                      stroke="rgba(255, 255, 255, 0.8)"
+                      strokeWidth="3"
+                      strokeDasharray="283"
+                      strokeDashoffset="283"
+                      className="progress-logo-circle"
+                    />
+                    <path
+                      d="M40 60L55 45L70 60L85 40"
+                      stroke="rgba(255, 255, 255, 0.9)"
+                      strokeWidth="2.5"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="progress-chart-line"
+                    />
+                  </svg>
+                </div>
+              </div>
+
               <div className="progress-bar">
                 <div className="progress-fill" style={{ width: `${(currentVideo / 3) * 100}%` }}></div>
               </div>
@@ -200,23 +229,28 @@ const TradingAnalyzer: React.FC = () => {
           </div>
         )}
 
-        {/* Fullscreen Video Overlay */}
+        {/* Fullscreen Logo Animation Overlay */}
         {isAnalyzing && (
-          <div className="fullscreen-video-overlay">
-            <video
-              key={`video-${currentVideo}`}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="fullscreen-video"
-              onError={(e) => {
-                console.error('Video error:', e);
-              }}
-            >
-              <source src={`/videos/${currentVideo === 1 ? 'money_animation' : currentVideo === 2 ? 'list_animation' : 'computer_animation'}.mp4`} type="video/mp4" />
-              <source src={`/videos/analysis${currentVideo}.mp4`} type="video/mp4" />
-            </video>
+          <div className="fullscreen-animation-overlay">
+            <div className="logo-animation-container">
+              <div className="rotating-logo">
+                <svg width="120" height="120" viewBox="0 0 120 120" className="trading-logo">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradient)" strokeWidth="4" strokeDasharray="314" strokeDashoffset="314" className="logo-circle"/>
+                  <path d="M40 60L55 45L70 60L85 40" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" className="chart-line"/>
+                  <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#00f5ff"/>
+                      <stop offset="100%" stopColor="#0099ff"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div className="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
             <div className="fullscreen-overlay-content">
               <div className="overlay-progress-bar">
                 <div className="overlay-progress-fill" style={{ width: `${(currentVideo / 3) * 100}%` }}></div>
@@ -256,7 +290,13 @@ const TradingAnalyzer: React.FC = () => {
               <div className="result-preview">
                 <div className="preview-header">
                   <div className="signal-indicator-new">
-                    <span className="chart-logo">📊</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" className="chart-logo-svg">
+                      <path d="M3 17L9 11L13 15L21 7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="21" cy="7" r="2" fill="currentColor"/>
+                      <circle cx="13" cy="15" r="2" fill="currentColor"/>
+                      <circle cx="9" cy="11" r="2" fill="currentColor"/>
+                      <circle cx="3" cy="17" r="2" fill="currentColor"/>
+                    </svg>
                     <span className="analysis-ready-text">Tahlil tayyor</span>
                   </div>
                 </div>

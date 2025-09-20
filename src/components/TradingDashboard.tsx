@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TradingChart from './TradingChart';
 import MarketAnalyzer from './MarketAnalyzer';
+import { ChartIcon, TrendUpIcon, MoneyIcon, RefreshIcon, ClipboardIcon, BoltIcon } from './LogoIcons';
 
 interface Position {
   id: string;
@@ -258,7 +259,7 @@ export const TradingDashboard: React.FC = () => {
       {/* Dashboard Header */}
       <div className="dashboard-header">
         <div className="header-left">
-          <h1>📊 Trading Dashboard</h1>
+          <h1><ChartIcon size={28} /> Trading Dashboard</h1>
           <div className="mode-toggle">
             <button
               className={`mode-btn ${!isLiveMode ? 'active' : ''}`}
@@ -321,7 +322,7 @@ export const TradingDashboard: React.FC = () => {
             {/* Quick Stats */}
             <div className="quick-stats">
               <div className="stat-card">
-                <div className="stat-icon">💰</div>
+                <div className="stat-icon"><MoneyIcon size={24} /></div>
                 <div className="stat-info">
                   <div className="stat-label">Total P&L</div>
                   <div className="stat-value" style={{ color: getPnLColor(performance?.totalPnL || 0) }}>
@@ -331,7 +332,7 @@ export const TradingDashboard: React.FC = () => {
               </div>
 
               <div className="stat-card">
-                <div className="stat-icon">📈</div>
+                <div className="stat-icon"><TrendUpIcon size={24} /></div>
                 <div className="stat-info">
                   <div className="stat-label">Win Rate</div>
                   <div className="stat-value">{performance?.winRate || 0}%</div>
@@ -339,7 +340,7 @@ export const TradingDashboard: React.FC = () => {
               </div>
 
               <div className="stat-card">
-                <div className="stat-icon">🔄</div>
+                <div className="stat-icon"><RefreshIcon size={24} /></div>
                 <div className="stat-info">
                   <div className="stat-label">Total Trades</div>
                   <div className="stat-value">{performance?.totalTrades || 0}</div>
@@ -357,7 +358,7 @@ export const TradingDashboard: React.FC = () => {
 
             {/* Open Positions Summary */}
             <div className="positions-summary">
-              <h3>📋 Open Positions</h3>
+              <h3><ClipboardIcon size={20} /> Open Positions</h3>
               <div className="positions-grid">
                 {positions.filter(p => p.status === 'OPEN').map(position => (
                   <div key={position.id} className="position-card">
@@ -424,7 +425,7 @@ export const TradingDashboard: React.FC = () => {
         {activeTab === 'positions' && (
           <div className="positions-tab">
             <div className="positions-header">
-              <h3>📊 Position Management</h3>
+              <h3><ChartIcon size={20} /> Position Management</h3>
               <div className="position-filters">
                 <button className="filter-btn active">All</button>
                 <button className="filter-btn">Open</button>
@@ -482,7 +483,7 @@ export const TradingDashboard: React.FC = () => {
         {activeTab === 'signals' && (
           <div className="signals-tab">
             <div className="signals-header">
-              <h3>⚡ Trading Signals</h3>
+              <h3><BoltIcon size={20} /> Trading Signals</h3>
               <button
                 className="generate-signals-btn"
                 onClick={generateTradingSignals}

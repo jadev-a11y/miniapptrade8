@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { ChartIcon, TrendUpIcon, TargetIcon, BulbIcon, ClockIcon } from './LogoIcons';
 
 interface MarketData {
   symbol: string;
@@ -341,7 +342,7 @@ export const MarketAnalyzer: React.FC = () => {
   return (
     <div className="market-analyzer">
       <div className="analyzer-header">
-        <h2>📊 Market Analyzer</h2>
+        <h2><ChartIcon size={24} /> Market Analyzer</h2>
         <div className="analyzer-controls">
           <select
             value={selectedSymbol}
@@ -369,7 +370,7 @@ export const MarketAnalyzer: React.FC = () => {
       <div className="analyzer-grid">
         {/* Market Overview */}
         <div className="market-overview">
-          <h3>📈 Market Overview</h3>
+          <h3><TrendUpIcon size={20} /> Market Overview</h3>
           <div className="market-grid">
             {marketData.slice(0, 6).map(data => (
               <div key={data.symbol} className="market-item">
@@ -447,7 +448,7 @@ export const MarketAnalyzer: React.FC = () => {
 
         {/* Analysis Result */}
         <div className="analysis-result">
-          <h3>🎯 Analysis Result</h3>
+          <h3><TargetIcon size={20} /> Analysis Result</h3>
 
           {isAnalyzing ? (
             <div className="analyzing-state">
@@ -503,7 +504,7 @@ export const MarketAnalyzer: React.FC = () => {
 
               <div className="price-targets">
                 <div className="target-item">
-                  <span>🎯 Target</span>
+                  <span><TargetIcon size={16} /> Target</span>
                   <span>{formatNumber(analysis.targetPrice, 5)}</span>
                 </div>
                 <div className="target-item">
@@ -519,12 +520,12 @@ export const MarketAnalyzer: React.FC = () => {
               </div>
 
               <div className="reasoning">
-                <strong>💡 Reasoning:</strong>
+                <strong><BulbIcon size={16} /> Reasoning:</strong>
                 <p>{analysis.reasoning}</p>
               </div>
 
               <div className="timeframe">
-                <strong>⏰ Timeframe:</strong> {analysis.timeframe}
+                <strong><ClockIcon size={16} /> Timeframe:</strong> {analysis.timeframe}
               </div>
             </div>
           ) : (

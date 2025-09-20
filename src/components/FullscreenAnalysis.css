@@ -32,16 +32,16 @@
 .fullscreen-analysis-container {
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  height: 95vh;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(60px) saturate(200%);
-  -webkit-backdrop-filter: blur(60px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 32px;
+  max-width: 900px;
+  height: 90vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
   box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -111,9 +111,9 @@
 .analysis-header {
   position: relative;
   z-index: 2;
-  padding: 32px 40px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
+  padding: 24px 32px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: transparent;
 }
 
 .header-content {
@@ -135,8 +135,19 @@
   gap: 12px;
 }
 
-.chart-logo {
-  font-size: 2rem;
+.chart-logo-svg {
+  color: #007aff;
+  filter: drop-shadow(0 0 10px rgba(0, 122, 255, 0.3));
+  animation: logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow {
+  from {
+    filter: drop-shadow(0 0 10px rgba(0, 122, 255, 0.3));
+  }
+  to {
+    filter: drop-shadow(0 0 20px rgba(0, 122, 255, 0.6));
+  }
 }
 
 .analysis-title {
@@ -247,14 +258,14 @@
   flex: 1;
   position: relative;
   overflow: auto;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 32px;
-  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
 .typing-container::-webkit-scrollbar {
@@ -359,9 +370,9 @@
   z-index: 2;
   display: flex;
   justify-content: center;
-  gap: 16px;
-  padding: 24px 40px 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 12px;
+  padding: 20px 32px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   flex-wrap: wrap;
 }
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { CandlestickIcon, LineChartIcon, VolumeIcon } from './LogoIcons';
 
 interface TradingChartProps {
   symbol: string;
@@ -432,19 +433,19 @@ export const TradingChart: React.FC<TradingChartProps> = ({
             className={`option-btn ${chartType === 'candlestick' ? 'active' : ''}`}
             onClick={() => setChartType('candlestick')}
           >
-            📊 Candlestick
+            <CandlestickIcon size={16} /> Candlestick
           </button>
           <button
             className={`option-btn ${chartType === 'line' ? 'active' : ''}`}
             onClick={() => setChartType('line')}
           >
-            📈 Line
+            <LineChartIcon size={16} /> Line
           </button>
           <button
             className={`option-btn ${showVolume ? 'active' : ''}`}
             onClick={() => setShowVolume(!showVolume)}
           >
-            📊 Volume
+            <VolumeIcon size={16} /> Volume
           </button>
         </div>
       </div>
