@@ -171,118 +171,74 @@ const TradingAnalyzer: React.FC = () => {
           </div>
         </div>
 
-        {isAnalyzing && (
-          <div className="liquid-glass-container loading-glass">
-            <div className="analysis-placeholder">
-              <div className="analysis-animation">
-                <div className="spinner"></div>
-                <div className="charts">
-                  <div className="chart-bar" style={{height: '40%'}}></div>
-                  <div className="chart-bar" style={{height: '70%'}}></div>
-                  <div className="chart-bar" style={{height: '30%'}}></div>
-                  <div className="chart-bar" style={{height: '60%'}}></div>
-                  <div className="chart-bar" style={{height: '80%'}}></div>
-                </div>
-              </div>
-
-              {/* Анимированное лого над прогресс баром */}
-              <div className="progress-logo-container">
-                <div className="rotating-progress-logo">
-                  <svg width="40" height="40" viewBox="0 0 120 120" className="progress-trading-logo">
+        {/* Apple Liquid Glass 2025 Loading */}
+        {isAnalyzing && !analysisComplete && (
+          <div className="fullscreen-loading-overlay">
+            <div className="loading-glass-card">
+              <div className="loading-content">
+                <div className="loading-logo-container">
+                  <svg width="80" height="80" viewBox="0 0 80 80" className="loading-logo">
                     <circle
-                      cx="60"
-                      cy="60"
-                      r="45"
+                      cx="40"
+                      cy="40"
+                      r="35"
                       fill="none"
                       stroke="rgba(255, 255, 255, 0.8)"
-                      strokeWidth="3"
-                      strokeDasharray="283"
-                      strokeDashoffset="283"
-                      className="progress-logo-circle"
+                      strokeWidth="2"
+                      strokeDasharray="220"
+                      strokeDashoffset="220"
+                      className="logo-circle"
                     />
                     <path
-                      d="M40 60L55 45L70 60L85 40"
+                      d="M25 40L35 30L45 40L55 25"
                       stroke="rgba(255, 255, 255, 0.9)"
                       strokeWidth="2.5"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="progress-chart-line"
+                      className="logo-bars"
                     />
                   </svg>
                 </div>
-              </div>
 
-              <div className="progress-bar">
-                <div className="progress-fill" style={{ width: `${(currentVideo / 3) * 100}%` }}></div>
-              </div>
-              <h3 className="video-message">{videoMessage}</h3>
-              <div className="step-indicator">
-                {[1, 2, 3].map(step => (
+                <div className="loading-message">{videoMessage}</div>
+
+                <div className="loading-progress-bar">
                   <div
-                    key={step}
-                    className={`step-dot ${currentVideo >= step ? 'active' : ''}`}
+                    className="loading-progress-fill"
+                    style={{ width: `${(currentVideo / 3) * 100}%` }}
                   />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+                </div>
 
-        {/* Fullscreen Logo Animation Overlay */}
-        {isAnalyzing && (
-          <div className="fullscreen-animation-overlay">
-            <div className="logo-animation-container">
-              <div className="rotating-logo">
-                <svg width="120" height="120" viewBox="0 0 120 120" className="trading-logo">
-                  <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradient)" strokeWidth="4" strokeDasharray="314" strokeDashoffset="314" className="logo-circle"/>
-                  <path d="M40 60L55 45L70 60L85 40" stroke="url(#gradient)" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" className="chart-line"/>
-                  <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#00f5ff"/>
-                      <stop offset="100%" stopColor="#0099ff"/>
-                    </linearGradient>
-                  </defs>
+                <div className="loading-steps">
+                  {[1, 2, 3].map(step => (
+                    <div
+                      key={step}
+                      className={`loading-step ${currentVideo >= step ? 'active' : ''}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Cancel Button */}
+              <button
+                className="cancel-loading-btn"
+                onClick={() => {
+                  setIsAnalyzing(false);
+                  setAnalysisComplete(false);
+                  setResult(null);
+                  setError('Tahlil bekor qilindi');
+                }}
+                aria-label="Tahlilni bekor qilish"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </div>
-              <div className="loading-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
+              </button>
             </div>
-            <div className="fullscreen-overlay-content">
-              <div className="overlay-progress-bar">
-                <div className="overlay-progress-fill" style={{ width: `${(currentVideo / 3) * 100}%` }}></div>
-              </div>
-              <h2 className="overlay-message">{videoMessage}</h2>
-              <div className="overlay-step-indicator">
-                {[1, 2, 3].map(step => (
-                  <div
-                    key={step}
-                    className={`overlay-step-dot ${currentVideo >= step ? 'active' : ''}`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Cancel Button */}
-            <button
-              className="cancel-analysis-btn"
-              onClick={() => {
-                setIsAnalyzing(false);
-                setAnalysisComplete(false);
-                setResult(null);
-                setError('Tahlil bekor qilindi');
-              }}
-              aria-label="Tahlilni bekor qilish"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
           </div>
         )}
+
 
         {analysisComplete && result && (
           <div className="liquid-glass-container">
