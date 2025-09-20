@@ -353,11 +353,8 @@ Give me your honest professional opinion based on the data you find.`
     const analysisText = response.choices[0].message.content || '';
     console.log(`GPT-4o-search-preview Output:\n${analysisText}\n`);
 
-    // Clean the analysis text from symbols and formatting
-    const cleanedText = cleanAnalysisText(analysisText);
-
-    // Parse the analysis
-    const result = parseAnalysis(cleanedText, symbol);
+    // Parse the analysis directly - cleanAnalysisText is called inside parseAnalysis
+    const result = parseAnalysis(analysisText, symbol);
     console.log('✅ Analysis completed successfully');
     return result;
 
@@ -453,7 +450,7 @@ function parseAnalysis(text: string, symbol: string): AnalysisResult {
     }
 
     if (!reason || reason.length < 50) {
-      reason = cleanedText || `${symbol} professional trading analysis completed. Recommendation: ${signal} signal based on current market data and technical indicators.`;
+      reason = text || `${symbol} professional trading analysis completed. Recommendation: ${signal} signal based on current market data and technical indicators.`;
     } else {
       reason = cleanAnalysisText(reason);
     }

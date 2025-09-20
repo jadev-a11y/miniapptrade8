@@ -598,11 +598,46 @@ body::before {
   100% { opacity: 1; transform: scaleY(1.2); }
 }
 
+/* Apple Liquid Glass 2025 Style Loading Container */
 .video-overlay {
   position: relative;
-  padding: 0;
-  background: transparent;
+  padding: 40px 30px;
+  background: linear-gradient(145deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.08) 100%);
+  backdrop-filter: blur(40px) saturate(1.8);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   text-align: center;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.video-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%);
+  animation: liquidShimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes liquidShimmer {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(200%); }
+  100% { transform: translateX(-100%); }
 }
 
 .progress-bar {
