@@ -30,10 +30,43 @@ const FullscreenAnalysis: React.FC<FullscreenAnalysisProps> = ({
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [typingStep, setTypingStep] = useState<number>(0);
 
+  // Clean GPT response from unwanted symbols and links
+  const cleanGPTText = (text: string): string => {
+    let cleaned = text;
+
+    // Remove URLs (http, https, www)
+    cleaned = cleaned.replace(/https?:\/\/[^\s\])\}]+/g, '');
+    cleaned = cleaned.replace(/www\.[^\s\])\}]+/g, '');
+
+    // Remove #* symbols and markdown
+    cleaned = cleaned.replace(/[#*]+/g, '');
+    cleaned = cleaned.replace(/\*\*/g, '');
+    cleaned = cleaned.replace(/\*/g, '');
+    cleaned = cleaned.replace(/#{1,6}\s*/g, '');
+
+    // Remove brackets with links
+    cleaned = cleaned.replace(/\[.*?\]/g, '');
+    cleaned = cleaned.replace(/\(.*?\.com.*?\)/g, '');
+    cleaned = cleaned.replace(/\(.*?\.net.*?\)/g, '');
+    cleaned = cleaned.replace(/\(.*?\.org.*?\)/g, '');
+
+    // Remove source references
+    cleaned = cleaned.replace(/source:\s*[^\n]+/gi, '');
+    cleaned = cleaned.replace(/manbaa?:\s*[^\n]+/gi, '');
+    cleaned = cleaned.replace(/according to\s+[^\n]+/gi, '');
+
+    // Clean extra whitespace
+    cleaned = cleaned.replace(/\s+/g, ' ');
+    cleaned = cleaned.replace(/\n\s*\n/g, '\n\n');
+    cleaned = cleaned.trim();
+
+    return cleaned;
+  };
+
   const sections = [
     {
       title: 'BATAFSIL TAHLIL',
-      content: result?.reason || ''
+      content: cleanGPTText(result?.reason || '')
     }
   ];
 

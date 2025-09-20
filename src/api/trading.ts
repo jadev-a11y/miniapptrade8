@@ -322,29 +322,29 @@ export async function analyzeSymbol(symbol: string): Promise<AnalysisResult> {
       messages: [
         {
           role: "system",
-          content: "You are a professional forex trader and technical analyst. Be yourself and provide deep, comprehensive analysis using current market data."
+          content: "Siz professional forex treyder va texnik tahlil mutaxassisisiz. O'zbek tilida vaqorli va hurmatli tarzda javob bering. Batafsil va tushunarli tahlil qiling."
         },
         {
           role: "user",
-          content: `Please analyze ${symbol} and provide a detailed trading analysis:
+          content: `${symbol} uchun batafsil treydingn tahlil qiling:
 
-Search for current market data:
-- Current ${symbol} price and daily change
-- Technical indicators (RSI, MACD, Moving Averages)
-- Support and resistance levels
-- Market news and sentiment
-- Volume analysis
-- Economic factors affecting this pair
+Joriy bozor ma'lumotlarini qidiring:
+- ${symbol} ning hozirgi narxi va kunlik o'zgarish
+- Texnik ko'rsatkichlar (RSI, MACD, Moving Averages)
+- Qo'llab-quvvatlash va qarshilik darajalari
+- Bozor yangiliklari va kayfiyat
+- Hajm tahlili
+- Ushbu juftlikka ta'sir qiluvchi iqtisodiy omillar
 
-Provide your professional analysis including:
-1. Current market situation
-2. Technical analysis with specific values
-3. Trading recommendation (BUY/SELL/HOLD) with confidence level
-4. Target and stop loss levels
-5. Risk assessment
-6. Market context and relevant news
+Professional tahlil bering:
+1. Hozirgi bozor holati
+2. Aniq qiymatlar bilan texnik tahlil
+3. Treydingn tavsiya (BUY/SELL/HOLD) ishonch darajasi bilan
+4. Maqsad va zarar to'xtatish darajalari
+5. Risk baholash
+6. Bozor konteksti va tegishli yangiliklar
 
-Give me your honest professional opinion based on the data you find.`
+O'zbek tilida vaqorli va hurmatli tarzda professional fikringizni bildiring. Barcha javoblaringiz O'zbek tilida bo'lsin.`
         }
       ],
       max_tokens: 4000
